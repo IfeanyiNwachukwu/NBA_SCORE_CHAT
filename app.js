@@ -96,15 +96,19 @@ const warriorsGames = [
     }
 ]
 
-const ulParent = document.createElement('ul');
+
 
 const makeChart = (games, targetTeam) => {
+
+    //console.log(`target team -> ${targetTeam}`);
+    const ulParent = document.createElement('ul');
     for(let game of games){
         const {homeTeam, awayTeam} = game;
     
         const gameLi = document.createElement('li');
       
         let isAWin = isWinner(game, targetTeam);
+        console.log(`Is A Win -> ${isAWin}`);
         let className;
         if(isAWin){
             className = 'win'
@@ -120,9 +124,10 @@ const makeChart = (games, targetTeam) => {
         gameLi.innerHTML = getScoreLine(game);
         ulParent.appendChild(gameLi);
       
-    
+        
         // console.log(awayTeam.team, homeTeam.team);
     }
+    return ulParent;
 }
 
 const isWinner = ({ homeTeam, awayTeam },targetTeam) =>{
@@ -148,7 +153,11 @@ const getScoreLine = ({ homeTeam, awayTeam }) => {
     return `${teamNames}  ${scoreLine}`;
 }
 
-// const chart1 = makeChart(warriorsGames, 'Golden State');
-const chart2 = makeChart(warriorsGames, 'Houston');
+const gsSection = document.querySelector('#gs');
+const houstonSection =  document.querySelector('#h');
 
-document.body.prepend(ulParent);
+const gsChart = makeChart(warriorsGames, 'Golden State');
+const hrChart = makeChart(warriorsGames, 'Houston');
+
+gsSection.appendChild(gsChart);
+houstonSection.appendChild(hrChart);
